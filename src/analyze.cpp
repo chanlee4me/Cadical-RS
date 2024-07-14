@@ -108,8 +108,11 @@ void Internal::bump_variable_score (int lit, int glue) {
   /*--------------added by cl---------------*/
   int64_t weight = 1.0 / glue;
   int64_t freq = hitFreq(idx);
-  int64_t sumClause = stats.learned.clauses;
-  double new_score = old_score + score_inc + 2 * weight * freq / sumClause;
+  // v1
+  // int64_t sumClause = stats.learned.clauses;
+  // v2
+  int64_t sumConflicts = stats.conflicts;
+  double new_score = old_score + score_inc + 2 * weight * freq /  sumConflicts;
   // double new_score = old_score + score_inc;
   /*--------------added by cl--------------*/
 
@@ -969,7 +972,13 @@ void Internal::analyze () {
   //
   Clause *reason = conflict;
   LOG (reason, "analyzing conflict");
-
+  /*--------------added by cl----------------*/
+  //v2 统计每个变量在冲突子句中的出现频率
+  int *lits = conflict->literals;
+  for(int i = 0; i < conflict->size; i++){
+      htab[vidx(lits[i])]++;
+  }
+  /*-------------------end-------------------*/
   assert (clause.empty ());
   assert (lrat_chain.empty ());
 
@@ -1081,10 +1090,10 @@ void Internal::analyze () {
   stats.learned.literals += size;
   stats.learned.clauses++;
   /*--------------added by cl----------------*/
-  //统计每个变量的出现频率
-  for(auto& var : clause){
-      htab[vidx(var)]++;
-  }
+  //v1 统计学习子句每个变量的出现频率
+  // for(auto& var : clause){
+  //     htab[vidx(var)]++;
+  // }
   /*-------------------end-------------------*/
   assert (glue < size);
 

@@ -204,6 +204,8 @@ struct Internal {
   double score_inc;             // current score increment
   ScoreSchedule scores;         // score based decision priority queue
   /*--------------added by cl----------------*/
+  //v1:变量在学习子句中的出现频次
+  //v2：变量在冲突子句中的出现频次
   vector<int> htab;             // 变量出现频率表table of variable hit frequencies [1,max_var]
   /*-------------------end-------------------*/
   vector<double> stab;          // table of variable scores [1,max_var]
