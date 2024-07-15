@@ -130,7 +130,7 @@ void Internal::enlarge (int new_max_var) {
   /*--------------added by cl--------------*/
   //分配内存，并将值置为0
   enlarge_zero (htab, new_vsize);
-  /*--------------added by cl--------------*/
+  /*-----------------end-------------------*/
   enlarge_zero (unit_clauses, 2 * new_vsize);
   enlarge_only (wtab, 2 * new_vsize);
   enlarge_only (vtab, new_vsize);
