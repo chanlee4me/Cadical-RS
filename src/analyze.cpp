@@ -106,7 +106,7 @@ void Internal::bump_variable_score (int lit, int glue) {
   double old_score = score (idx);
   assert (!evsids_limit_hit (old_score));
   /*--------------added by cl---------------*/
-  int64_t weight = 1.0 / glue;
+  double weight = 1.0 / glue;
   int64_t freq = hitFreq(idx);
   // v1
   // int64_t sumClause = stats.learned.clauses;
@@ -114,7 +114,7 @@ void Internal::bump_variable_score (int lit, int glue) {
   int64_t sumConflicts = stats.conflicts;
   double new_score = old_score + score_inc + 2 * weight * freq /  sumConflicts;
   // double new_score = old_score + score_inc;
-  /*--------------added by cl--------------*/
+  /*-------------------end------------------*/
 
   if (evsids_limit_hit (new_score)) {
     LOG ("bumping %g score of %d hits EVSIDS score limit", old_score, idx);
